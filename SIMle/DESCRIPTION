@@ -1,0 +1,30 @@
+Package: SIMle
+Type: Package
+Title: Estimation and simultaneous inference for nonlinear and non-stationary time series regression
+Version: 0.1.0
+Authors@R: c(person("Xiucai", "Ding", role = c("aut", "cre","cph"),
+                     email = "xiucaiding89@gmail.com"),
+             person("Chen", "Qian", role = c("aut","cph"),
+                     email = "mrcqian@ucdavis.edu"))
+Description: We provide functions for estimation and inference of nonlinear and non-stationary time series regression using the sieve methods and bootstrapping procedure. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Repository: CRAN, Github
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Imports: 
+    ggplot2,
+    Matrix,
+    plotly,
+    stringr,
+    RCurl,
+    splines,
+    methods,
+    utils, 
+    stats, 
+    Sie2nts
+
