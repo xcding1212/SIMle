@@ -2,14 +2,24 @@
 % Please edit documentation in R/test.plot.R
 \name{test.plot}
 \alias{test.plot}
-\title{the plot for simultaneous confidence region(SCR)}
+\title{Visulization of Simultaneous Confidence Region(SCR) for test result}
 \usage{
-test.plot(df, type, ops = "", title = "", lower = -1.3, upper = 1.3)
+test.plot(
+  df,
+  type,
+  option = "each",
+  ops = "",
+  title = "",
+  lower = -1.3,
+  upper = 1.3
+)
 }
 \arguments{
 \item{df}{the result of test (estimated function under null and Simultaneous Confidence Region (SCR) )}
 
 \item{type}{specify type of test, "homot" represents time-homogeneity test. "separa" is separability test}
+
+\item{option}{Choose either the fixed value separability test or the for all values separability test. The default is "each"}
 
 \item{ops}{select type of estimation."nfix" refers to no fix estimation. "fixt" indicates fix time t estimation.
 "fixx" represents fix variate estimation}
@@ -19,21 +29,10 @@ test.plot(df, type, ops = "", title = "", lower = -1.3, upper = 1.3)
 \item{lower}{give the lower bound for scale limits, the default is -1.3}
 
 \item{upper}{give the upper bound for scale limits, the default is 1.3}
-
-\item{res_esti}{the result of estimation and simultaneous confidence region}
 }
 \value{
-the plot shows estimated function and its simultaneous confidence region(SCR)
-
 the plot shows test estimated function and simultaneous confidence region (SCR)
 }
 \description{
-the plot for simultaneous confidence region(SCR)
-}
-\examples{
-Visulization of Simultaneous Confidence Region(SCR) for test result 
-
-res = auto.sep.test(ts, 2, 2, "tri", "db4", "algeb","fixx", "Kfold", k = 4, fix_num = 0.1, r = 2)
-test.plot(res[[1]], "separa", "fixx")
-test.plot(res[[2]], "separa", "fixx")
+Visulization of Simultaneous Confidence Region(SCR) for test result
 }

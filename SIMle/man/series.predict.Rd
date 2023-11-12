@@ -2,7 +2,7 @@
 % Please edit documentation in R/series.predict.R
 \name{series.predict}
 \alias{series.predict}
-\title{Predicting time series with H steps}
+\title{Predicting time series with 1 step}
 \usage{
 series.predict(
   ts,
@@ -40,8 +40,4 @@ predictive values for time series
 }
 \description{
 This function predicts the time series data basis on the estimation.
-}
-\examples{
-res = series.predict(ts, 2, 3, "tri", "Legen", "algeb")
-
 }

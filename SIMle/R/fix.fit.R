@@ -34,9 +34,6 @@ source(paste(getwd(), "/R/SIMle.plot.v1.R", sep = ""))
 #' @return If "nfix" is selected, the function returns a list where each element is a matrix representing the estimation function in two dimensions. Otherwise, 
 #'         if "nfix" is not selected, the function returns a list where each element is a vector representing the estimation function.
 #' @export
-#'
-#' @examples
-#' res = fix.fit(ts, 2, 2,  "tri", "tri", "algeb", "fixx", 0.6)
 
 
 

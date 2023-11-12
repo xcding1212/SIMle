@@ -29,10 +29,6 @@ source(paste(getwd(), "/R/SIMle.original_code.v1.R", sep = ""))
 #'         along with their upper and lower bounds, which are used for time-homogeneity testing. The third column serves as a factor indicating the types corresponding to the values in 
 #'         the second column.
 #' @export
-#'
-#' @examples
-#' homo.test(ts, 3, 2, m = "MV", "tri", "Legen", "algeb",  fix_num = 0.1, n_point = 1000)
-
 
 
 homo.test <- function(ts, c, d, m = "MV", b_time, b_timese, mp_type,  fix_num = 0, r = 1, s = 1, n_point = 4000, upper = 10){

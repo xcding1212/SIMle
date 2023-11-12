@@ -26,7 +26,21 @@ source(paste(getwd(), "/R/SIMle.original_code.v1.R", sep = ""))
 #' @export
 #'
 #' @examples
-#' res_esti = fix.fit(ts, 4, 3, "tri", "tri", "algeb", "fixt", 0.1)
+#' generate_nAR1 = function(n, v){
+#'  ts = c()
+#'  w = rnorm(n, 0, 1/v)
+#'  x_ini = runif(1,0,1)
+#'  for(i in 1:n){
+#'    if(i == 1){
+#'      ts[i] = sin(2*pi*(i/n))*exp(-x_ini^2)  + w[i] #
+#'    } else{
+#'      ts[i] = sin(2*pi*(i/n))*exp(-ts[i-1]^2) + w[i]
+#'    }
+#'  }
+#'  return(ts)
+#' }
+#' ts  = generate_nAR1(200, 1) # change sample size in real case
+#' res_esti = fix.fit(ts, 5, 2, "Legen", "Legen", "algeb", "fixt", 0.1)
 #' fit.plot(res_esti[[1]], "fixt", "algeb")
 
 fit.plot <- function(res_esti, ops, mp_type, title="", lower = -1.3, upper = 1.3, domain = 10){

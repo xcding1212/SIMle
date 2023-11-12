@@ -18,7 +18,7 @@ source(paste(getwd(), "/R/SIMle.original_code.v1.R", sep = ""))
 #' @param k k-th basis function
 #' @param upper the upper bound for basis domain, the default is 10 
 #' @param s s is a positive scaling factor, the default is 1
-#' @param point the number of values got from k-th basis function, the default is 500
+#' @param n_esti the number of values got from k-th basis function, the default is 500
 #' @param c c only used in Cspli which indicates the total number of knots to generate, the default is 10, c should not be less than k.(for splines, the true
 #'        number of basis is c-2+or)
 #' @param or indicates the order of spline and only used in Cspli type, default is 4 which indicates cubic spline

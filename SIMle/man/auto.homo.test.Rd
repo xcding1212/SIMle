@@ -58,7 +58,3 @@ the second column.
 \description{
 This function utilizes Simultaneous Confidence Regions (SCR) for the automated execution of time-homogeneity tests with chosen bases.
 }
-\examples{
-auto.homo.test(ts, 3, 2, "Legen", "tri", "algeb", "AIC")
-auto.homo.test(ts, 3, 3, "Cspli", "Cspli","algeb", "CV", per = 0.2, fix_num = 0.8)
-}

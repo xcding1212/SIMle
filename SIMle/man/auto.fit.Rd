@@ -60,7 +60,3 @@ if "nfix" is not selected, the function returns a list where each element is a v
 \description{
 This function estimates nonlinear time series regression by sieve methods with chosen bases.
 }
-\examples{
-auto.fit(ts, 3, 2, "Legen", "tri","algeb", "nfix", "AIC")
-auto.fit(ts, 3, 3, "Cspli", "Cspli","algeb", "fixt", "CV", per = 0.2, fix_num = 0.8)
-}

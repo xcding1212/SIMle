@@ -1,6 +1,6 @@
 Package: SIMle
 Type: Package
-Title: Estimation and simultaneous inference for nonlinear and non-stationary time series regression
+Title: Estimation and Inference for General Time Series Regression
 Version: 0.1.0
 Authors@R: c(person("Xiucai", "Ding", role = c("aut", "cre","cph"),
                      email = "xiucaiding89@gmail.com"),

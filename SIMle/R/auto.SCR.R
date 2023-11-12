@@ -32,15 +32,12 @@ source(paste(getwd(), "/R/SIMle.original_code.v1.R", sep = ""))
 #' @return A list containing dataframes with three columns each. The first column corresponds to input values. The second column contains values of the estimated function, along with 
 #'         their upper and lower bounds. The third column is a factor that indicates the types associated with the values in the second column.
 #' @export
-#'
-#' @examples
-#' auto.SCR(ts, 3, 3, "Cspli", "Cspli","algeb", "fixt", "CV", per = 0.2, fix_num = 0.8)
 
 
 
 
 auto.SCR <- function(ts, c, d, b_time, b_timese, mp_type, type, ops, m = "MV", fix_num = 0, r = 1, s = 1, per = 0, k = 0, upper = 10){ # ops: criteria, type: fixx or fixt
-  best_cd = best_cd.auto.fit(ts,c, d, b_time, b_timese, mp_type, ops, r = r, s = s, per = per, k = k)
+  best_cd = best_cd.auto.fit(ts, c, d, b_time, b_timese, mp_type, ops, r = r, s = s, per = per, k = k)
   res = fix.SCR(ts, as.numeric(best_cd[1]), as.numeric(best_cd[2]), m, b_time, b_timese, mp_type, type, fix_num = fix_num, r = r, s = s, upper = upper)
   return(res)
 }

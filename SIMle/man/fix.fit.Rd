@@ -53,6 +53,3 @@ if "nfix" is not selected, the function returns a list where each element is a v
 \description{
 This function estimates nonlinear time series regression by sieve methods
 }
-\examples{
-res = fix.fit(ts, 2, 2,  "tri", "tri", "algeb", "fixx", 0.6)
-}

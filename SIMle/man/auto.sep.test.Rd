@@ -11,9 +11,10 @@ auto.sep.test(
   b_time,
   b_timese,
   mp_type,
-  type,
+  type = "not",
   ops,
   m = "MV",
+  option = "each",
   fix_num = 0,
   r = 1,
   s = 1,
@@ -35,11 +36,13 @@ auto.sep.test(
 
 \item{mp_type}{select type of mapping function, "algeb" indicates algebraic mapping on the real line. "logari" represents logarithmic mapping on the real line}
 
-\item{type}{select type of estimation."fixt" indicates fix time t. "fixx" represents fix variate}
+\item{type}{select type of estimation."fixt" indicates fix time t. "fixx" represents fix variate. The default is "not" which indicates no fix value}
 
 \item{ops}{Criteria for choosing the number of bases are provided by the package, offering four options: "AIC," "BIC," "CV," and "Kfold," each corresponding to a specific Criteria}
 
 \item{m}{the window size for the simultaneous confidence region procedure, with the default being 'MV,' which stands for the Minimum Volatility method}
+
+\item{option}{Choose either the fixed value separability test or the for all values separability test. The default is "each"}
 
 \item{fix_num}{fix_num indicates the use of fixed-value nonlinear time series regression. If "fixt" is chosen, it represents a fixed time value. Otherwise,
 if not selected, it pertains to a fixed variate value}
@@ -55,14 +58,11 @@ if not selected, it pertains to a fixed variate value}
 \item{upper}{upper The upper bound for the variate basis domain. The default value is 10. When "algeb" or "logari" is chosen, the domain is automatically set from -upper to upper}
 }
 \value{
-A list containing dataframes with three columns each. The first column represents input values. The second column contains values of the estimated function,
+If option equals to "each". A list containing dataframes with three columns each. The first column represents input values. The second column contains values of the estimated function,
 along with their upper and lower bounds, which are used for separability testing. The third column is a factor indicating the types corresponding to the values
-in the second column.
+in the second column. If option equals to "all". It returns a list containing 2 lists. The first one contains SCR dataframe  and the second one is estimated function by using separating
+function of t and function of x.
 }
 \description{
 This function utilizes Simultaneous Confidence Regions (SCR) for the automated execution of separability tests with with chosen bases.
-}
-\examples{
-auto.sep.test(ts, 3, 2, "Legen", "tri", "algeb", "fixx",  "AIC")
-auto.sep.test(ts, 3, 3, "tri", "Cheby","algeb", "fixt", "BIC", fix_num = 0.8)
 }

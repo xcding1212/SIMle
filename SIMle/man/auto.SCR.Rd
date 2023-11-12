@@ -61,6 +61,3 @@ their upper and lower bounds. The third column is a factor that indicates the ty
 \description{
 This function generates a Simultaneous Confidence Region (SCR) for the estimated function with chosen bases.
 }
-\examples{
-auto.SCR(ts, 3, 3, "Cspli", "Cspli","algeb", "fixt", "CV", per = 0.2, fix_num = 0.8)
-}

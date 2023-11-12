@@ -55,6 +55,3 @@ their upper and lower bounds. The third column is a factor that indicates the ty
 \description{
 This function generates a Simultaneous Confidence Region (SCR) for the estimated function
 }
-\examples{
-res = fix.SCR(ts, 2, 2, m = "MV", "db4", "cf1", "algeb", "fixt", 0.6, r = 2)
-}

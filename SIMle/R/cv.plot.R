@@ -18,10 +18,6 @@ source(paste(getwd(), "/R/SIMle.original_code.v1.R", sep = ""))
 #' 
 #' @return the plot shows cross validation result (3D)
 #' @export
-#'
-#' @examples
-#' cv.plot(cv.res(ts, 3, 3, "Legen", "Legen", "algeb", "AIC"))
-
  
 cv.plot = function(cv_m, title=""){
   res = fit.plot.cvm(cv_m, title = title)

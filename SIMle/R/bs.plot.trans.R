@@ -66,7 +66,7 @@ bs.plot.trans <- function(type, mp_type, k, upper = 10, s = 1, or = 4, title = "
   for(i in 1:k){
     aux = c(aux, aux_basis[,i])
   }
-  aux_order = as.factor(rep(1:k, each = n_esti))
+  aux_order = as.factor(rep(0:(k-1), each = n_esti))
   
   f.df = data.frame(x = x, new = aux, order = aux_order)
 

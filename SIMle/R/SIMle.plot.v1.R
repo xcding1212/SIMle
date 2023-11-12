@@ -26,7 +26,7 @@ plot_esti <- function(res_esti, ops, mp_type, title="", lower = -1.3, upper = 1.
     
     theme_update(plot.title = element_text(hjust = 0.5))
     
-    res = ggplot(df, aes(x=x, y=res_esti)) + geom_line(color = "#00AFBB")  + ggtitle(title) + ylim(lower, upper) +
+    res = ggplot(df, aes_string(x="x", y= "y")) + geom_line(color = "#00AFBB")  + ggtitle(title) + ylim(lower, upper) +
       xlab("x") + ylab("m(t,x)")  + theme(plot.title = element_text(size=18, face="bold"),
                                                                              legend.text=element_text(size=24, face = "bold"),
                                                                              axis.text.x = element_text(face="bold", color="#993333",size=22, angle=0),
@@ -43,7 +43,7 @@ plot_esti <- function(res_esti, ops, mp_type, title="", lower = -1.3, upper = 1.
     
     theme_update(plot.title = element_text(hjust = 0.5))
     
-    res = ggplot(df, aes(x=t, y=res_esti)) + geom_line(color = "#00AFBB")  + ggtitle(title) + ylim(lower, upper) +
+    res = ggplot(df, aes_string(x="t", y="y")) + geom_line(color = "#00AFBB")  + ggtitle(title) + ylim(lower, upper) +
       xlab("t") + ylab("m(t,x)") + scale_colour_discrete(name  ="phi")+theme(plot.title = element_text(size=18, face="bold"),
                                                                              legend.text=element_text(size=24, face = "bold"),
                                                                              axis.text.x = element_text(face="bold", color="#993333",size=22, angle=0),
@@ -57,7 +57,6 @@ plot_esti <- function(res_esti, ops, mp_type, title="", lower = -1.3, upper = 1.
     # 3D plot 
     fig <- plot_ly(z = ~res_esti)
     fig <- fig %>% add_surface()
-    
     fig <- fig %>% layout(title = "Estimation function", scene = list(camera = list(eye = list(x = 2, y = 0.15, z = 1)),xaxis = list(title = 'x'),
                                                         yaxis = list(title = 't'),
                                                         zaxis = list(title = 'Este_function')))
@@ -105,9 +104,10 @@ plot_scr <- function(scr_df, ops, title = "", lower = -1.3, upper = 1.3){ # fixt
     theme_update(plot.title = element_text(hjust = 0.5))
     
 
-    res = ggplot(scr_df, aes(x=x, y=y, group = order, colour = order)) + geom_line() + ylim(lower, upper) + 
-      scale_color_manual(values = c("#FF0000", "#3399FF", "#3399FF"))  + ggtitle(title)  +
-      xlab("x") + ylab("m(t,x)")  + theme(plot.title = element_text(size=18, face="bold"),
+    res = ggplot(scr_df, aes_string(x="x", y="y", group = "order", colour = "order")) + geom_line() + ylim(lower, upper) + 
+      scale_color_manual(values = c("#FF0000", "#3399FF", "#3399FF"), labels=c("EST", "LCR", "UCR"))  + ggtitle(title)  +
+      xlab("x") + ylab("m(t,x)")  + guides(color = guide_legend(title = "")) +
+                                          theme(plot.title = element_text(size=18, face="bold"),
                                           legend.text=element_text(size=22, face = "bold"),
                                           axis.text.x = element_text(face="bold", color="#993333",size=22, angle=0),
                                           axis.text.y = element_text(face="bold", color="#993333",size=22, angle=0),
@@ -120,9 +120,10 @@ plot_scr <- function(scr_df, ops, title = "", lower = -1.3, upper = 1.3){ # fixt
     
   } else if (ops == "fixx"){
     theme_update(plot.title = element_text(hjust = 0.5))
-    res = ggplot(scr_df, aes(x=t, y=y, group = order, colour = order)) + geom_line() + ylim(lower, upper) + 
-      scale_color_manual(values = c("#FF0000", "#3399FF", "#3399FF"))  + ggtitle(title)  +
-      xlab("t") + ylab("m(t,x)")  + theme(plot.title = element_text(size=18, face="bold"),
+    res = ggplot(scr_df, aes_string(x = "t", y = "y", group = "order", colour = "order")) + geom_line() + ylim(lower, upper) + 
+      scale_color_manual(values = c("#FF0000", "#3399FF", "#3399FF"), labels=c("EST", "LCR", "UCR"))  + ggtitle(title)  +
+      xlab("t") + ylab("m(t,x)")  + guides(color = guide_legend(title = "")) +
+                                          theme(plot.title = element_text(size=18, face="bold"),
                                           legend.text=element_text(size=22, face = "bold"),
                                           axis.text.x = element_text(face="bold", color="#993333",size=22, angle=0),
                                           axis.text.y = element_text(face="bold", color="#993333",size=22, angle=0),
@@ -144,13 +145,11 @@ plot_scr <- function(scr_df, ops, title = "", lower = -1.3, upper = 1.3){ # fixt
 
 # plot time homogeniety
 homot_plot <- function(sepera_df, title = "", lower = -1.3, upper = 1.3){
-  
   theme_update(plot.title = element_text(hjust = 0.5))
-  
-  
-  res = ggplot(sepera_df, aes(x=x, y=y, group = order, colour = order)) + geom_line() + ylim(lower, upper) +
-    scale_color_manual(values = c("#FF0000", "#3399FF", "#3399FF"))  + ggtitle(title)  +
-    xlab("x") + ylab("m(t,x)")  + theme(plot.title = element_text(size=18, face="bold"),
+  res = ggplot(sepera_df, aes_string(x="x", y="y", group = "order", colour = "order")) + geom_line() + ylim(lower, upper) +
+    scale_color_manual(values = c("#FF0000", "#3399FF", "#3399FF"), labels=c("EST", "LCR", "UCR"))  + ggtitle(title)  +
+    xlab("x") + ylab("m(t,x)")  + guides(color = guide_legend(title = "")) +
+                                        theme(plot.title = element_text(size=18, face="bold"),
                                         legend.text=element_text(size=22, face = "bold"),
                                         axis.text.x = element_text(face="bold", color="#993333",size=22, angle=0),
                                         axis.text.y = element_text(face="bold", color="#993333",size=22, angle=0),
@@ -170,9 +169,10 @@ sep_plot <- function(sepera_df, ops, title = "", lower = -1.3, upper = 1.3){
     theme_update(plot.title = element_text(hjust = 0.5))
     
     
-    res = ggplot(sepera_df, aes(x=x, y=y, group = order, colour = order)) + geom_line() + ylim(lower, upper) + 
-      scale_color_manual(values = c("#FF0000", "#3399FF", "#3399FF"))  + ggtitle(title)  +
-      xlab("x") + ylab("m(t,x)")  + theme(plot.title = element_text(size=18, face="bold"),
+    res = ggplot(sepera_df, aes_string(x="x", y="y", group = "order", colour = "order")) + geom_line() + ylim(lower, upper) + 
+      scale_color_manual(values = c("#FF0000", "#3399FF", "#3399FF"), labels=c("EST", "LCR", "UCR"))  + ggtitle(title)  +
+      xlab("x") + ylab("m(t,x)")  + guides(color = guide_legend(title = "")) + 
+                                          theme(plot.title = element_text(size=18, face="bold"),
                                           legend.text=element_text(size=22, face = "bold"),
                                           axis.text.x = element_text(face="bold", color="#993333",size=22, angle=0),
                                           axis.text.y = element_text(face="bold", color="#993333",size=22, angle=0),
@@ -186,9 +186,10 @@ sep_plot <- function(sepera_df, ops, title = "", lower = -1.3, upper = 1.3){
     theme_update(plot.title = element_text(hjust = 0.5))
     
     
-    res = ggplot(sepera_df, aes(x=t, y=y, group = order, colour = order)) + geom_line() + ylim(lower, upper) +
-      scale_color_manual(values = c("#FF0000", "#3399FF", "#3399FF"))  + ggtitle(title)  +
-      xlab("t") + ylab("m(t,x)")  + theme(plot.title = element_text(size=18, face="bold"),
+    res = ggplot(sepera_df, aes_string(x="t", y="y", group = "order", colour = "order")) + geom_line() + ylim(lower, upper) +
+      scale_color_manual(values = c("#FF0000", "#3399FF", "#3399FF"), labels=c("EST", "LCR", "UCR"))  + ggtitle(title)  +
+      xlab("t") + ylab("m(t,x)")  + guides(color = guide_legend(title = "")) +
+                                          theme(plot.title = element_text(size=18, face="bold"),
                                           legend.text=element_text(size=22, face = "bold"),
                                           axis.text.x = element_text(face="bold", color="#993333",size=22, angle=0),
                                           axis.text.y = element_text(face="bold", color="#993333",size=22, angle=0),
@@ -203,7 +204,51 @@ sep_plot <- function(sepera_df, ops, title = "", lower = -1.3, upper = 1.3){
   }
 }
 
-
+sep_plot_3d <- function(res, ops, title = title, lower = lower, upper = upper){
+  
+  t = seq(0,1, length.out = 300)
+  x = seq(-10, 10, length.out = 300)
+  plt_res = list()
+  n_esti = dim(res[[2]][[1]])[1]
+  k = length(res[[2]])
+  for(i in 1:k){
+    # 1 index for scr.df, 2 index for fix x point, 3 index for r 
+    
+    df_upper = res[[1]][[1]][[k]][res[[1]][[1]][[k]][,3] == "upper",c(1,2)]
+    df_lower = res[[1]][[1]][[k]][res[[1]][[1]][[k]][,3] == "lower",c(1,2)]
+    for(i in 2:n_esti){
+      df_upper = rbind(df_upper, res[[1]][[i]][[k]][res[[1]][[i]][[k]][,3] == "upper",c(1,2)])
+      df_lower = rbind(df_lower, res[[1]][[i]][[k]][res[[1]][[i]][[k]][,3] == "lower",c(1,2)])
+    }
+    df_upper$x = rep(x, each = n_esti)
+    df_lower$x = rep(x, each = n_esti)
+    # 1 index for scr.df, 2 index for fix x point, 3 index for r 
+    
+    aux_scr_upper = matrix(df_upper$y, ncol = n_esti, nrow = n_esti)
+    aux_scr_lower = matrix(df_lower$y, ncol = n_esti, nrow = n_esti)
+    estimate = res[[2]][[k]]
+    
+    fig <- plot_ly(showscale = FALSE) 
+    fig <- fig %>% add_surface(x= ~t, y=~x, z = ~aux_scr_upper, colorscale = list(c(0,1),c("rgb(129,212,247)","rgb(12,177,247)")))
+    fig <- fig %>% add_surface(x= ~t, y=~x, z = ~aux_scr_lower, colorscale = list(c(0,1),c("rgb(129,212,247)","rgb(12,177,247)")))
+    fig <- fig %>% add_surface(x= ~t, y=~x, z = ~estimate, colorscale = list(c(0,1),c("rgb(255,107,184)","rgb(128,0,64)")))
+    
+    fig <- fig %>% layout(title = title, scene = list(camera = list(eye = list(x = -1.68, y = 1.68, z = 1.3)), xaxis = list(title = 't'),
+                                                      yaxis = list(title = 'x'),
+                                                      zaxis = list(title = 'm_t_x')),
+                          annotations = list(
+                            x = 1.13,
+                            y = 1.05,
+                            text = 'm_t_x',
+                            xref = 'paper',
+                            yref = 'paper',
+                            showarrow = FALSE
+                          ))
+    plt_res[[k]] = fig
+  }
+  
+  return(plt_res)
+}
 
 
 

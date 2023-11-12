@@ -14,7 +14,7 @@ source(paste(getwd(), "/R/SIMle.original_code.v1.R", sep = ""))
 
 # prediction step, what exact formula used in this step? 
 
-#' Predicting time series with H steps
+#' Predicting time series with 1 step
 #' 
 #' @description This function predicts the time series data basis on the estimation.
 #' 
@@ -30,11 +30,9 @@ source(paste(getwd(), "/R/SIMle.original_code.v1.R", sep = ""))
 #'
 #' @return predictive values for time series 
 #' @export
-#'
-#' @examples
-#' res = series.predict(ts, 2, 3, "tri", "Legen", "algeb")
 #' 
+
 series.predict = function(ts, c, d, b_time, b_timese, mp_type, r=1, s=1, n_esti = 2000){
   res = esti_ts(ts, c, d, b_time, b_timese, mp_type, r=r, s=s, n_esti = n_esti)
-  return(res)
+  return(res[length(res)])
 }

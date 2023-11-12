@@ -31,10 +31,8 @@ source(paste(getwd(), "/R/homo.test.R", sep = ""))
 #'         along with their upper and lower bounds, which are used for time-homogeneity testing. The third column serves as a factor indicating the types corresponding to the values in 
 #'         the second column.
 #' @export
-#'
-#' @examples
-#' auto.homo.test(ts, 3, 2, "Legen", "tri", "algeb", "AIC")
-#' auto.homo.test(ts, 3, 3, "Cspli", "Cspli","algeb", "CV", per = 0.2, fix_num = 0.8)
+
+
 
 
 

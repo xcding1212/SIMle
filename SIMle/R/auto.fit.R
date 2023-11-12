@@ -9,8 +9,6 @@ source(paste(getwd(), "/R/SIMle.plot.v1.R", sep = ""))
 source(paste(getwd(), "/R/SIMle.original_code.v1.R", sep = ""))
 source(paste(getwd(), "/R/cv.res.R", sep = ""))
 
-# res[which(res[,3] == min(res[,3])), c(1,2)]
-
 
 #' Automated estimation of nonlinear time series regression
 #' @description This function estimates nonlinear time series regression by sieve methods with chosen bases.
@@ -37,10 +35,6 @@ source(paste(getwd(), "/R/cv.res.R", sep = ""))
 #' @return If "nfix" is selected, the function returns a list where each element is a matrix representing the estimation function in two dimensions. Otherwise, 
 #'         if "nfix" is not selected, the function returns a list where each element is a vector representing the estimation function.
 #' @export
-#'
-#' @examples
-#' auto.fit(ts, 3, 2, "Legen", "tri","algeb", "nfix", "AIC")
-#' auto.fit(ts, 3, 3, "Cspli", "Cspli","algeb", "fixt", "CV", per = 0.2, fix_num = 0.8)
 
 
 auto.fit = function(ts, c, d, b_time, b_timese, mp_type, type, ops, per = 0, k = 0, fix_num = 0, r = 1, s = 1, upper = 10){

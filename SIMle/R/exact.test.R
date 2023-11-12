@@ -29,9 +29,7 @@ source(paste(getwd(), "/R/SIMle.original_code.v1.R", sep = ""))
 #' 
 #' @return A list whose elements are p value of exact form test. Each element in the list represents p-values in the order of variates.
 #' @export
-#'
-#' @examples
-#' res = exact.test(ts, 4, 5, 16, "Legen", "Legen", obj_func)
+
 
 
 

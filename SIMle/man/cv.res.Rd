@@ -36,7 +36,3 @@ element refers to the optimal number of basis for variate.
 \description{
 this function gets the cross validation result by specific criteria.
 }
-\examples{
-cv.res(ts, 2, 2, "db3", "cf2", "algeb", "BIC")
-cv.res(ts, 3, 3, "tri", "Legen", "algeb", "AIC", r = 2)
-}

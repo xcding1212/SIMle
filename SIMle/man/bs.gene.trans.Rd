@@ -26,12 +26,12 @@ bs.gene.trans(
 
 \item{s}{s is a positive scaling factor, the default is 1}
 
+\item{n_esti}{the number of values got from k-th basis function, the default is 500}
+
 \item{c}{c only used in Cspli which indicates the total number of knots to generate, the default is 10, c should not be less than k.(for splines, the true
 number of basis is c-2+or)}
 
 \item{or}{indicates the order of spline and only used in Cspli type, default is 4 which indicates cubic spline}
-
-\item{point}{the number of values got from k-th basis function, the default is 500}
 }
 \value{
 A matrix in which the k-th column corresponds to the values of the k-th mapped basis function

@@ -52,6 +52,3 @@ the second column.
 \description{
 This function utilizes Simultaneous Confidence Regions (SCR) for the automated execution of time-homogeneity tests
 }
-\examples{
-homo.test(ts, 3, 2, m = "MV", "tri", "Legen", "algeb",  fix_num = 0.1, n_point = 1000)
-}

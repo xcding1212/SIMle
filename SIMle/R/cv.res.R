@@ -29,10 +29,6 @@ source(paste(getwd(), "/R/SIMle.original_code.v1.R", sep = ""))
 #' @return A data frame containing the criterion values corresponding to "c" and "d". The first element refers to the optimal number of basis for time input, and the second 
 #'         element refers to the optimal number of basis for variate. 
 #' @export
-#'
-#' @examples
-#' cv.res(ts, 2, 2, "db3", "cf2", "algeb", "BIC")
-#' cv.res(ts, 3, 3, "tri", "Legen", "algeb", "AIC", r = 2)
 
 cv.res <- function(ts,c, d, b_time, b_timese, mp_type, ops, r = 1, s = 1, per = 0, k = 0){
   if(ops == "AIC"){

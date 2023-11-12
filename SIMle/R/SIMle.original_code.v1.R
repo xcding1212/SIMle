@@ -78,7 +78,6 @@ best_cd.auto.fit <- function(ts, c, d, b_time, b_timese, mp_type, ops, r = 1, s 
 }
 
 
-
 cd_selection <- function(ts, c, d, b_time, b_timese, mp_type, ops, per = 0, k = 0, r = 1, s = 1){ 
   # choosing the minimum value for c and d
   # ops for selecting method, AIC, BIC, cross validation(train and test set), k-fold
@@ -319,6 +318,8 @@ general_esti <- function(ts, c, d, b_time, b_timese, mp_type, r = 1, s = 1, n_es
   
 }
 
+# res = general_esti(timese[1:100], 2,3, "tri", "Legen", "algeb", n_esti = 50)
+
 # Get estimated time series (for prediction)
 esti_ts <- function(ts, c, d, b_time, b_timese, mp_type, r=1, s=1, n_esti = 2000, upper = 10){ # in r=1 case 
   n = length(ts)
@@ -332,9 +333,16 @@ esti_ts <- function(ts, c, d, b_time, b_timese, mp_type, r=1, s=1, n_esti = 2000
   }
   
   esti_func = general_esti(ts, c, d, b_time, b_timese, mp_type, r, s, n_esti) # estimated function using ts
-  for(i in (r+1):n){
-    fited_res[i-1] = esti_func[i, unique(which(abs(x_i-ts[i-1]) == min(abs(x_i-ts[i-1]))))]
+  aux_esti_func = 0
+  for(i in (r+1):n_esti){
+    for(j in 1:r){
+      aux_fix_inde = unique(which(abs(x_i-ts[i-r]) == min(abs(x_i-ts[i-r]))))[1]
+      aux_esti_func = aux_esti_func + esti_func[[j]][i, aux_fix_inde]
+    }
+    fited_res[i-1] = aux_esti_func
+    aux_esti_func = 0 
   }
+  
   return(fited_res)
 }
 
@@ -381,7 +389,7 @@ fix_t_esti <- function(timese, c, d, t, b_time, b_timese, mp_type, r=1, s = 1, n
   }
   
   func_t = seq(0, 1, length.out = n_esti)
-  index_t = unique(which(abs(func_t-t) == min(abs(func_t-t))))
+  index_t = unique(which(abs(func_t-t) == min(abs(func_t-t))))[1]
   
   
   for(i in 1:n_esti){
@@ -513,7 +521,7 @@ fix_x_esti <- function(timese, c, d, fix_x, b_time, b_timese, mp_type, r=1, s=1,
     c = c*2 -1 
   }
   
-  index_x = unique(which(abs(x-fix_x) == min(abs(x-fix_x))))
+  index_x = unique(which(abs(x-fix_x) == min(abs(x-fix_x))))[1]
   
   for(l1 in 1:c){
     if(b_time == "Cspli"){
@@ -562,11 +570,10 @@ fix_x_esti <- function(timese, c, d, fix_x, b_time, b_timese, mp_type, r=1, s=1,
 # Prediction and choosing c and d for auto.fit ((auto version prediction, automatically choosing c and d))
 # cross_validation (separate in percentage) 
 
-
 cross_validation <- function(ts, c, d, per, b_time, b_timese, mp_type, r = 1, s = 1){ # per: percentage for testing set, typically is 0.1
   n = length(ts)
   gcv = 0
-  aux.true = ts[(floor(n*(1-per))+1): n]
+  aux.true = ts[(floor(n*(1-per))+1):n]
   esti_df = esti_beta(ts[1:floor(n*(1-per))], c, d, b_time, b_timese,mp_type, r, s)
   
   W = esti_df[[2]]
@@ -1146,7 +1153,7 @@ SCR_fix_t <- function(ts, m, t, c, d, b_time, b_timese, mp_type, r=1, s = 1, n_p
   b = matrix(nrow = c*d_tri)
   
   func_t = seq(0, 1, length.out = dim(basis_ti)[1])
-  index_t = unique(which(abs(func_t - t) == min(abs(func_t - t))))
+  index_t = unique(which(abs(func_t - t) == min(abs(func_t - t))))[1]
   
   
   for(M in 1:n_len){
@@ -1192,7 +1199,7 @@ SCR_fix_t <- function(ts, m, t, c, d, b_time, b_timese, mp_type, r=1, s = 1, n_p
     }
     
     df_T_1k = matrix(unlist(T_1k), ncol = 1000)
-    h_hat = apply(df_T_1k, 1, sd)
+    h_hat = apply(df_T_1k, 1, sd) # using function sd()
     
     # df_T_1k = matrix(unlist(T_1k), ncol = 1000)
     for(k in 1:1000){
@@ -1208,6 +1215,7 @@ SCR_fix_t <- function(ts, m, t, c, d, b_time, b_timese, mp_type, r=1, s = 1, n_p
 
 fix_t_scr <- function(timese, t, c, d, m, b_time, b_timese, mp_type, r = 1, s = 1, n_point = 2000, upper = 10){
   # n_esti = length(timese)
+  
   width = SCR_fix_t(timese, m, t, c, d, b_time, b_timese, mp_type, r, s, n_point = n_point, upper = upper)
   esti = fix_t_esti(timese, c, d, t, b_time, b_timese, mp_type, r, s, n_esti = n_point, upper = upper)
   f.df = list()
@@ -1215,7 +1223,7 @@ fix_t_scr <- function(timese, t, c, d, m, b_time, b_timese, mp_type, r = 1, s = 
   pos_map = c( "algebp", "logarip") 
   
   if(mp_type %in% pos_map){
-    x_i = seq(0, upper, length.out = n_esti)
+    x_i = seq(0, upper, length.out = n_point)
   }else{
     x_i = rep(seq(-upper, upper, length.out = n_point), 3)
   }
@@ -1417,7 +1425,7 @@ SCR_fix_x <- function(ts, m, fix_x, c, d, b_time, b_timese, mp_type, r = 1, s = 
   basis_xi = as.matrix(basis_xi, ncol = d_tri)
   
   
-  index_x = unique(which(abs(x_i-fix_x) == min(abs(x_i-fix_x))))
+  index_x = unique(which(abs(x_i-fix_x) == min(abs(x_i-fix_x))))[1]
   
   ## Bootstrap
   tao_k = c()
@@ -1549,7 +1557,7 @@ homot_scr <- function(timese, t, c, d, m, b_time, b_timese, mp_type, r = 1, s = 
   
   
   func_t = seq(0, 1, length.out = n_esti)
-  index_t = unique(which(abs(func_t - t) == min(abs(func_t - t))))
+  index_t = unique(which(abs(func_t - t) == min(abs(func_t - t))))[1]
   
   #for(j in 1:r){ # j for lag
   #  for(i in (r+1):n){
@@ -1747,11 +1755,13 @@ fix_t_sepera_scr <- function(timese, t, c, d, m, b_time, b_timese, mp_type, r = 
     
     
     func_t = seq(0, 1, length.out = n_esti)
-    index_t = unique(which(abs(func_t - t) == min(abs(func_t - t))))
+    index_t = unique(which(abs(func_t - t) == min(abs(func_t - t))))[1]
     
-    f_t = (apply(m_hat_ij,1, sum)/n_esti) 
+    f_t = (apply(m_hat_ij,1, sum)/n_esti)*2*upper 
     g_x = (apply(m_hat_ij,2, sum)/n_esti) 
-    esti_sep[[k]] = (g_x)*f_t[index_t] / (sum(apply(m_hat_ij, 1, sum)/n_esti)/n_esti) # there are 2 seperates
+    const = sum((apply(m_hat_ij,1, sum)/n_esti)*2*upper)/n_esti
+    
+    esti_sep[[k]] = (g_x)*f_t[index_t] / const # there are 2 seperates
   }
   
   # basis_x = matrix(ncol = d_tri) 
@@ -1912,11 +1922,13 @@ fix_x_sepera_scr <- function(timese, f_x, c, d, m, b_time, b_timese, mp_type, r=
       }
     }
     
-    index_x = unique(which(abs(x_i-f_x) == min(abs(x_i-f_x))))
+    index_x = unique(which(abs(x_i-f_x) == min(abs(x_i-f_x))))[1]
     
-    f_t = (apply(m_hat_ij,1, sum)/n_esti) 
-    g_x = (apply(m_hat_ij,2, sum)/n_esti) 
-    esti_sep[[k]] = (g_x[index_x]*(f_t)) / (sum(apply(m_hat_ij, 1, sum)/n_esti)/n_esti)
+    f_t = (apply(m_hat_ij,1, sum)/n_esti)*2*upper
+    g_x = (apply(m_hat_ij,2, sum)/n_esti)
+    const = sum((apply(m_hat_ij,1, sum)/n_esti)*2*upper)/n_esti
+    
+    esti_sep[[k]] = (g_x[index_x]*(f_t)) / const
     
   }
   
@@ -1983,6 +1995,124 @@ fix_x_sepera_scr <- function(timese, f_x, c, d, m, b_time, b_timese, mp_type, r=
   return(f.df)
 }
 
+
+sepera_3d <- function(timese, c, d, m, b_time, b_timese, mp_type, r = 1, s = 1, n_point = 2000,  upper = 10){
+  
+  n_esti = n_point # length(timese)
+  beta_hat = esti_beta(timese, c, d, b_time, b_timese, mp_type, r, s)[[1]]
+  m_hat_ij = matrix(rep(0, n_esti*n_esti), nrow = n_esti, ncol = n_esti)
+  aux_t_basis = seq(0, 1, length.out = n_point)
+  aux_x_basis = seq(-10, 10, length.out = n_point)
+  
+  scr.df = list()
+  for(j in 1:n_point){
+    scr.df[[j]] = fix_x_scr(timese, aux_x_basis[j], c, d, m, b_time, b_timese, mp_type, r = r, s = s, n_point = n_point,  upper = upper)
+    }
+  
+  
+  df_basis = 0
+  if(b_timese == "Cspli"){
+    df_basis = Cspline_table(d) # true is d - 2 + or 
+    d = dim(df_basis)[2]
+  }
+  
+  # change for wavelet
+  wavelet_basis = c("db1", "db2", "db3", "db4", "db5",
+                    "db6", "db7", "db8", "db9", "db10",
+                    "db11", "db12", "db13", "db14", "db15",
+                    "db16", "db17", "db18", "db19", "db20",
+                    "cf1", "cf2", "cf3", "cf4", "cf5"
+  )  
+  if(b_timese %in% wavelet_basis){
+    df_basis = db_table(d, b_timese)
+    d = dim(df_basis)[2]
+  }
+  
+  if(b_timese == "tri"){
+    d_tri = 2*d - 1
+  } else{
+    d_tri = d
+  }
+  
+  m_sep_ij = c() # fix t
+  basis_xi = matrix(ncol = d_tri) 
+  basis_ti = matrix(nrow = n_esti) 
+  
+  
+  pos_map = c( "algebp", "logarip") 
+  if(mp_type %in% pos_map){
+    x_i = seq(0, upper, length.out = n_esti)
+  }else{
+    x_i = seq(-upper, upper, length.out = n_esti) 
+  }
+  
+  for(i in 1:n_esti){
+    basis_xi = rbind(basis_xi, sqrt(mp_selection(mp_type, x_i[i], s)[2])*select_basis_timese(d, mp_selection(mp_type, x_i[i], s)[1], b_timese, df_basis))
+  }
+  basis_xi = basis_xi[-1, ]
+  basis_xi = as.matrix(basis_xi, ncol = d_tri)
+  
+  
+  if(b_time == "Cspli"){
+    df_basis = Cspline_table(c, n_esti) # true is d - 2 + or 
+    c = dim(df_basis)[2]
+  }
+  
+  if(b_time %in% wavelet_basis){
+    df_basis_1 = wavelet_kth_b(c, n_esti, b_time)
+    c = dim(df_basis_1)[2]
+  }
+  
+  if(b_time == "tri"){
+    c = c*2 -1 
+  }
+  
+  for(l1 in 1:c){
+    if(b_time == "Cspli"){
+      aux_bti = as.matrix(df_basis[, l1])
+    }else if(b_time %in% wavelet_basis){
+      aux_bti = as.matrix(df_basis_1[, l1])
+    }else{
+      aux_bti = bs.gene(b_time, l1, n_esti)
+    }
+    basis_ti = cbind(basis_ti, aux_bti)
+  }
+  colnames(basis_ti) = NULL
+  basis_ti =  as.matrix(basis_ti[,-1], ncol = c) 
+  
+  
+  sep_m_hat_ij = matrix(rep(0, n_esti*n_esti), nrow = n_esti, ncol = n_esti)
+    
+  # m_hat(i,j)
+  esti_sep = list()
+  for(k in 1:r){
+    for(i in 1:n_esti){
+      for(j in 1:n_esti){
+        ti = matrix(as.numeric(basis_ti[i,]), ncol = 1)
+        xj = matrix(as.numeric(basis_xi[j,]), ncol = 1)
+        m_hat_ij[i,j] = t(matrix(beta_hat[((k-1)*c*d+1):(k*c*d),], ncol = 1))%*%kronecker(ti, xj)
+      }
+    }
+    
+    
+    # func_t = seq(0, 1, length.out = n_esti)
+    #index_t = unique(which(abs(func_t - t) == min(abs(func_t - t))))[1]
+    
+    f_t = (apply(m_hat_ij,1, sum)/n_esti)*2*upper 
+    g_x = (apply(m_hat_ij,2, sum)/n_esti) 
+    const = sum((apply(m_hat_ij,1, sum)/n_esti)*2*upper)/n_esti
+    
+    for(l in 1:n_esti){
+      for(m in 1:n_esti){
+        sep_m_hat_ij[l, m] = f_t[l]*g_x[m] / const
+      }
+    }
+    esti_sep[[k]] = sep_m_hat_ij # there are 2 seperates
+  }
+  
+  
+  return(list(scr.df, esti_sep = esti_sep))
+}
 
 
 # Exact form Test # (input should be one data frame the exact function) 
@@ -2297,7 +2427,6 @@ min_vola <- function(ts, aux.esti, basis_x, aux_bt, r){
     se.li[[mj-3]] = sqrt(se/6)
   }
   return(m.op = which(unlist(se.li) == min(unlist(se.li))) + 3)
-  # return(unlist(se.li))
 }
 
 

@@ -17,6 +17,3 @@ the plot shows cross validation result (3D)
 \description{
 Visualization of the cross-validation results
 }
-\examples{
-cv.plot(cv.res(ts, 3, 3, "Legen", "Legen", "algeb", "AIC"))
-}

@@ -32,10 +32,6 @@ source(paste(getwd(), "/R/SIMle.original_code.v1.R", sep = ""))
 #' @return A list containing dataframes with three columns each. The first column corresponds to input values. The second column contains values of the estimated function, along with 
 #'         their upper and lower bounds. The third column is a factor that indicates the types associated with the values in the second column.
 #' @export
-#'
-#' @examples
-#' res = fix.SCR(ts, 2, 2, m = "MV", "db4", "cf1", "algeb", "fixt", 0.6, r = 2)
-
 
 
 fix.SCR <- function(ts, c, d, m = "MV", b_time, b_timese, mp_type, type, fix_num = 0, r = 1, s = 1, n_point = 4000, upper = 10){

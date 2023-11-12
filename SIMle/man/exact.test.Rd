@@ -48,6 +48,3 @@ A list whose elements are p value of exact form test. Each element in the list r
 \description{
 This function employs the L2 test for the user-specific execution of exact form tests.
 }
-\examples{
-res = exact.test(ts, 4, 5, 16, "Legen", "Legen", obj_func)
-}
